@@ -7,6 +7,18 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
+fastapi = {extras = ["standard"], version = "^0.116.1"}
+langchain = {extras = ["openai"], version = "^0.3.27"}
+sqlalchemy = "^2.0.43"
+psycopg2 = "^2.9.10"
+python-jose = {extras = ["cryptography"], version = "^3.5.0"}
+langchain-huggingface = "^0.3.1"
+langchain-community = "^0.3.29"
+sentence-transformers = "^5.1.0"
+pypdf = "^6.0.0"
+chromadb = "^1.0.20"
+passlib = "^1.7.4"
+langgraph = "^0.6.6"
 
 
 [build-system]
