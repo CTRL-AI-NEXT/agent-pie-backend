@@ -1,11 +1,8 @@
 from fastapi import APIRouter, HTTPException, UploadFile, File
-
 import os
 import time
 from dotenv import load_dotenv
-
 from langchain_huggingface import HuggingFaceEmbeddings
-
 from langchain_community.vectorstores import FAISS
 from langchain_community.document_loaders import PyPDFDirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -42,31 +39,16 @@ prompt = ChatPromptTemplate.from_template(
     """
 )
 
-# ---------- Global vector store cache ----------
 vector_store = None
 
 
-# ---------- Helper function ----------
 def create_vector_embedding():
     global vector_store
     loader = PyPDFDirectoryLoader("documents")  # Data ingestion
     docs = loader.load()
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
     final_documents = text_splitter.split_documents(docs[:50])
-    # vector_store = FAISS.from_documents(final_documents, embeddings)
     vector_store = Chroma.from_documents(final_documents, embeddings)
-
-
-# ---------- API Endpoints ----------
-# @router.post("/embed")
-# def embed_documents():
-#     """Create vector embeddings from PDFs in documents/"""
-#     global vector_store
-#     try:
-#         create_vector_embedding()
-#         return {"message": "Vector Database is ready"}
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.post("/query", response_model=QueryResponse)
@@ -109,7 +91,6 @@ async def upload_pdf(file: UploadFile = File(...)):
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
-    # Rebuild embeddings (using all PDFs in folder)
     try:
         create_vector_embedding()
     except Exception as e:

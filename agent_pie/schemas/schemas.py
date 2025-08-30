@@ -1,138 +1,8 @@
-# from pydantic import BaseModel
-# from datetime import datetime
-# from typing import List, Optional
-# from uuid import UUID
-# from pydantic import BaseModel, EmailStr
-# from enum import Enum
-
-
-# class RequestQuestion(BaseModel):
-#     question: str
-
-
-# class ResponseQuestion(BaseModel):
-#     response: str
-
-
-# class QueryRequest(BaseModel):
-#     question: str
-
-
-# class QueryResponse(BaseModel):
-#     answer: str
-#     response_time: float
-
-
-# # //////////////////////////////
-
-
-# class Role(str, Enum):
-#     manager = "manager"
-#     employee = "employee"
-
-
-# class Gender(str, Enum):
-#     male = "male"
-#     female = "female"
-
-
-# class User(BaseModel):
-#     # user_id: Optional[UUID] = Field(default_factory=uuid4)
-#     full_name: str
-#     gender: Gender
-#     role: Role
-
-
-# class ResponseUsers(BaseModel):
-#     user_id: UUID
-#     full_name: str
-#     gender: Gender
-#     role: str
-#     created_at: datetime
-
-#     class Config:
-#         orm_mode = True
-
-
-# # class UserUpdateRequest(BaseModel):
-# #     first_name: Optional[str] = None
-# #     middle_name: Optional[str] = None
-# #     last_name: Optional[str] = None
-# #     roles: Optional[List[Role]] = []
-
-
-# # class DeleteUser(BaseModel):
-# #     user_id: UUID
-
-# #     class Config:
-# #         orm_mode = True
-
-
-# class UserLoginRequest(BaseModel):
-#     email: EmailStr
-#     password: str
-
-
-# class UserLoginResponse(BaseModel):
-#     _id: UUID
-#     full_name: str
-#     email: EmailStr
-#     gender: Gender
-#     role: Role
-#     created_at: datetime
-
-#     class Config:
-#         orm_mode = True
-
-
-# class Token(BaseModel):
-#     access_token: str
-#     token_type: str
-
-#     class Config:
-#         orm_mode = True
-
-
-# class TokenData(BaseModel):
-#     employee_id: str
-
-
-# # Task related schemas
-# class Task(BaseModel):
-#     # task_id: UUID
-#     # employee_id: UUID
-#     task_title: str
-#     task_description: Optional[str] = None
-#     # task_status: str
-#     # task_start_date: str
-#     # task_end_date: str
-#     # created_at: datetime
-
-
-# class ResponseTask(BaseModel):
-#     task_id: UUID
-#     employee_id: UUID
-#     task_title: str
-#     task_description: Optional[str]
-#     created_at: datetime
-
-#     class Config:
-#         orm_mode = True
-
-
-# class TaskUpdateRequest(BaseModel):
-#     task_title: Optional[str] = None
-#     task_description: Optional[str] = None
-
-# -------------------------------------------------------
 from pydantic import BaseModel, EmailStr
 from typing import Optional, List, Dict, Any
 from datetime import datetime
 
 
-# ---------------------------
-# User Schemas
-# ---------------------------
 class UserBase(BaseModel):
     email: EmailStr
     name: Optional[str] = None
@@ -159,7 +29,7 @@ class SOPBase(BaseModel):
 
 
 class SOPCreate(SOPBase):
-    file_data: bytes  # uploaded as blob
+    file_data: bytes  # upload as blob
 
 
 class SOPRead(SOPBase):
@@ -271,3 +141,37 @@ class QuizAttemptRead(QuizAttemptBase):
 
     class Config:
         from_attributes = True
+
+
+class SOPRead(BaseModel):
+    id: int
+    filename: str  # optional: if you want to show the file name
+    created_at: str
+
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+
+class LoginWithSOPResponse(BaseModel):
+    id: int
+    name: str
+    email: str
+    is_manager: bool
+    sops: List[SOPRead] = []
+
+
+from pydantic import BaseModel
+
+
+class ChatRequest(BaseModel):
+    question: str
+    # sop_ids: list[int]
+
+
+class ChatResponse(BaseModel):
+    question: str
+    answer: str
+    sop_ids: List[int]
+    sop_title: str | None
