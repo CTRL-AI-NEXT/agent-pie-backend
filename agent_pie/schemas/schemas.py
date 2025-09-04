@@ -25,6 +25,9 @@ class UserRead(UserBase):
 # SOP Schemas
 # ---------------------------
 class SOPBase(BaseModel):
+    # extracted_text: Optional[str] = None
+    # title: str
+    # filename: str
     extracted_text: Optional[str] = None
 
 
@@ -140,13 +143,16 @@ class QuizAttemptRead(QuizAttemptBase):
     created_at: datetime
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 
-class SOPRead(BaseModel):
+class SOPReadLogin(BaseModel):
     id: int
-    filename: str  # optional: if you want to show the file name
-    created_at: str
+    filename: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
 
 
 class LoginRequest(BaseModel):
@@ -159,10 +165,11 @@ class LoginWithSOPResponse(BaseModel):
     name: str
     email: str
     is_manager: bool
-    sops: List[SOPRead] = []
 
+    sops: List[SOPReadLogin] = []
 
-from pydantic import BaseModel
+    class Config:
+        from_attributes = True
 
 
 class ChatRequest(BaseModel):
