@@ -31,6 +31,7 @@ class SOP(Base):
     __tablename__ = "sops"
     id = Column(Integer, primary_key=True, index=True)
     manager_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
+    file_name = Column(String, nullable=False,unique=True)
     file_data = Column(LargeBinary, nullable=False)  # raw PDF stored as blob
     extracted_text = Column(Text, nullable=True)
     created_at = Column(TIMESTAMP(timezone=True), server_default=func.now())

@@ -27,17 +27,19 @@ class UserRead(UserBase):
 class SOPBase(BaseModel):
     # extracted_text: Optional[str] = None
     # title: str
-    # filename: str
+    # file_name: str
     extracted_text: Optional[str] = None
 
 
 class SOPCreate(SOPBase):
+    file_name: str
     file_data: bytes  # upload as blob
 
 
 class SOPRead(SOPBase):
     id: int
     manager_id: int
+    file_name: str
     created_at: datetime
 
     class Config:

@@ -28,7 +28,7 @@ async def upload_sop(
     file_data = file.file.read()
     extracted_text = extract_text_from_pdf(file_data)
 
-    sop_schema = schemas.SOPCreate(file_data=file_data, extracted_text=extracted_text)
+    sop_schema = schemas.SOPCreate(file_name=file.filename, file_data=file_data, extracted_text=extracted_text)
     sop = crud.create_sop(db_session, sop_schema, manager_id)
     return sop
 

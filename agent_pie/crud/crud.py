@@ -33,6 +33,7 @@ def create_user(db: Session, user: schemas.UserCreate, hashed_password: str):
 # -------------------
 def create_sop(db: Session, sop: schemas.SOPCreate, manager_id: int):
     db_sop = models.SOP(
+        file_name=sop.file_name,
         file_data=sop.file_data,
         extracted_text=sop.extracted_text,
         manager_id=manager_id,

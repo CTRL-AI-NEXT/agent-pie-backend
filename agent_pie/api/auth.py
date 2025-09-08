@@ -32,14 +32,14 @@ def login(data: LoginRequest, db: Session = Depends(get_db)):
     sops_response = [
         SOPReadLogin(
             id=s.id,
-            filename=getattr(s, "filename", f"SOP-{s.id}"),
+            filename=s.file_name,
             # filename="test",
             created_at=s.created_at,
         )
         for s in sops
     ]
 
-    print("SOPs -------->", sops_response[0].model_dump())
+#    print("SOPs -------->", sops_response[0].model_dump())
 
     res = {
         "id": user.id,
