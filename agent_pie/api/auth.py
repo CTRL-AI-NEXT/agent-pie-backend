@@ -39,7 +39,7 @@ def login(data: LoginRequest, db: Session = Depends(get_db)):
         for s in sops
     ]
 
-    print("SOPs -------->", sops_response[0].model_dump())
+#    print("SOPs -------->", sops_response[0].model_dump())
 
     res = {
         "id": user.id,
