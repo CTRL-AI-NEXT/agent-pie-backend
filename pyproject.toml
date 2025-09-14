@@ -17,6 +17,8 @@ langchain-community = "^0.3.29"
 pypdf = "^6.0.0"
 passlib = "^1.7.4"
 langgraph = "^0.6.6"
+psycopg2-binary = "^2.9.10"
+gunicorn = "^23.0.0"
 
 
 [build-system]
