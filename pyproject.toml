@@ -17,6 +17,7 @@ langchain-community = "^0.3.29"
 pypdf = "^6.0.0"
 passlib = "^1.7.4"
 langgraph = "^0.6.6"
+langchain-groq = "^0.3.8"
 
 
 [build-system]
